@@ -26,7 +26,7 @@ int* array = (int*)malloc(sizeof(int) * num);
 
 以下是实现代码：
 
-1. 初始化操作
+#### 初始化操作
 
 ```c
 /*vector结构体*/
@@ -66,7 +66,7 @@ void vector_resize(struct vector* v, int capacity) {
 
 - `calloc`和`realloc`：与`malloc`不同，`calloc`在分配内存时还会把每个元素初始化为0；而`realloc`会尝试在原来的地址处调整内存空间大小，如果空间足够，原来的数据就不会丢失，只有空间不够的情况下才会重新找一块内存，这时候原来的数据就不能一起迁移过来，需要重新复制一遍，`vector_resize`函数的最后两行就是在做这个判断（如果新分配的指针地址和原来不一样，说明起始地址变了，需要  复制原来的数据到新的内存空间里）。
 
-2. 插入元素
+#### 插入元素
 
 ```c
 /*在尾部插入元素*/
@@ -93,7 +93,7 @@ void vector_insert(struct vector* v, void* item, int index) {
 }
 ```
 
-3. 删除元素
+#### 删除元素
 
 ```c
 /*删除尾部元素*/
@@ -119,7 +119,7 @@ void vector_erase(struct vector* v, int index) {
 }
 ```
 
-4. 实现元素随机访问（ps: 随机访问和随机数没关系，是能不按顺序直接访问任意一个元素的意思）
+#### 实现元素随机访问（ps: 随机访问和随机数没关系，是能不按顺序直接访问任意一个元素的意思）
 
 ```c
 /*访问头部元素*/
@@ -142,7 +142,7 @@ void* vector_get(struct vector* v, int index) {
 
 访问时的`v->sizeOfType`就是在按照元素类型的字节数访问，保证读取的数据正确。
 
-5. 清零和析构操作
+#### 清零和析构操作
 
 ```c
 /*清空数组*/
@@ -157,7 +157,7 @@ void vector_free(struct vector* v) {
 }
 ```
 
-6. 一些宏定义
+#### 一些宏定义
 
 ```c
 /*简化构造函数的调用*/
