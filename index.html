@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoccusQ</title>
+    <style>
+        :root {
+            --primary-color: #2b3137;
+            --secondary-color: #25c2a0;
+            --text-color: #24292e;
+            --bg-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .navbar-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* 主内容 */
+        .main-content {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+
+        /* 欢迎语 */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 博客列表 */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .blog-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .blog-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .blog-title {
+            color: var(--secondary-color);
+            margin: 1rem 0;
+        }
+
+        .blog-title-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* 新增的CSS代码 */
+        .blog-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-card-link:hover .blog-title {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .blog-card-link:focus {
+            outline: 2px solid var(--secondary-color);
+            outline-offset: 2px;
+        }
+
+        /* 页脚 */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="https://coccusq.github.io" class="navbar-logo">CoccusQ</a>
+            <div class="navbar-links">
+                <a href="#"></a>
+                <a href="#"></a>
+                <a href="#"></a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero">
+            <h1>Welcome!</h1>
+            <p></p>
+        </section>
+
+        <div class="blog-grid">
+            <!-- 博客文章示例 -->
+            <article class="blog-card">
+                <span class="blog-date">2024年10月24日</span>
+                <a href="https://coccusq.github.io/c-stl-vector" class="blog-title-link">
+                    <h2 class="blog-title">C语言实现STL：vector 动态数组</h2>
+                </a>
+                <p>C语言实现动态数组的原理并不复杂，只需要实现数组元素的插入和删除、随机访问以及根据当前数组内元素数量自动调整数组占用内存大小的功能即可...</p>
+            </article>
+
+            <article class="blog-card">
+                <span class="blog-date">2024年10月31日</span>
+                <a href="https://coccusq.github.io/c-stl-list" class="blog-title-link">
+                    <h2 class="blog-title">C语言实现STL：list 双向循环链表</h2>
+                </a>
+                <p>有了之前使用C语言实现动态数组的经验，实现双向循环链表就变得简单了很多，重点不再是实现任意类型数据的存储，而是双向循环链表的设计...</p>
+            </article>
+
+            <article class="blog-card">
+                <span class="blog-date"></span>
+                <a href="#" class="blog-title-link">
+                    <h2 class="blog-title"></h2>
+                </a>
+                <p>To be continued...</p>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>By CoccusQ 2025</p>
+    </footer>
+</body>
+</html>
