@@ -6,10 +6,12 @@
     <title>CoccusQ</title>
     <style>
         :root {
-            --primary-color: #2b3137;
-            --secondary-color: #25c2a0;
+            --primary-color: #2e8555;  /* 主色保留用于交互元素 */
+            --secondary-color: #2b3137; /* 改为深色用于文字 */
+            --footer-color: #303846;
             --text-color: #24292e;
             --bg-color: #ffffff;
+            --nav-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 新增导航栏阴影 */
         }
 
         * {
@@ -27,12 +29,60 @@
 
         /* 导航栏 */
         .navbar {
+            background-color: var(--bg-color); /* 改为白色背景 */
+            box-shadow: var(--nav-shadow); /* 添加底部阴影 */
+            padding: 1rem 0; /* 调整内边距 */
+        }
+
+        /* 修改后的导航栏Logo样式 */
+        .navbar-logo {
+            color: var(--secondary-color) !important;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            font-size: larger;
+            transition: all 0.3s ease; /* 改为all属性过渡 */
+        }
+
+        /* 新增悬停效果 */
+        .navbar-logo:hover {
+            color: var(--primary-color) !important; /* 悬停时使用主色 */
+            transform: scale(1.05); /* 悬停时轻微放大 */
+        }
+
+        /* 在导航栏容器中添加指示线 */
+        .navbar-links a.active::after {
+            width: 100% !important;
+        }
+
+        /* 修改后的导航栏链接样式 */
+        .navbar-links {
+            display: flex;
+            gap: 2rem; /* 新增链接间距 */
+        }
+
+        .navbar-links a {
+            color: var(--text-color) !important;
+            position: relative;
+            padding: 0.6rem 1rem; /* 增加内边距 */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease; /* 新增颜色过渡 */
+        }
+
+        .navbar-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
             background-color: var(--primary-color);
-            padding: 1rem;
-            position: fixed;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-links a:hover::after {
             width: 100%;
-            top: 0;
-            z-index: 1000;
         }
 
         .navbar-container {
@@ -43,27 +93,6 @@
             align-items: center;
         }
 
-        .navbar-logo {
-            color: white;
-            font-size: 1.5rem;
-            text-decoration: none;
-        }
-
-        .navbar-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .navbar-links a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-
-        .navbar-links a:hover {
-            opacity: 0.8;
-        }
-
         /* 主内容 */
         .main-content {
             max-width: 1200px;
@@ -71,23 +100,50 @@
             padding: 2rem;
         }
 
-        /* 欢迎语 */
+        /* 修改后的欢迎语样式 */
         .hero {
             text-align: center;
-            padding: 4rem 0;
+            padding: 6rem 0;  /* 增加内边距 */
+            background-color: var(--primary-color); /* 使用深色背景 */
+            color: white; /* 设置文字为白色 */
+            margin-bottom: 2rem; /* 增加与下方内容的间距 */
         }
 
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            color: white; /* 修改标题颜色为白色 */
         }
 
         .hero p {
             font-size: 1.2rem;
-            color: #666;
+            color: rgba(255,255,255,0.9); /* 设置半透明白色 */
             max-width: 800px;
             margin: 0 auto;
+        }
+
+        /* 新增按钮样式 */
+        .hero-cta {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 12px 24px;
+            background-color: var(--bg-color);
+            color: black;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .hero-cta:hover {
+            background-color: #11574a; /* 主色深10% */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .hero-cta:active {
+            transform: translateY(0);
         }
 
         /* 博客列表 */
@@ -144,7 +200,7 @@
 
         /* 页脚 */
         .footer {
-            background-color: var(--primary-color);
+            background-color: var(--footer-color);
             color: white;
             text-align: center;
             padding: 2rem;
@@ -165,31 +221,23 @@
 <body>
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="https://coccusq.github.io" class="navbar-logo">CoccusQ</a>
+            <a href="https://coccusq.github.io" class="navbar-logo">🐍CoccusQ</a>
             <div class="navbar-links">
-                <a href="#"></a>
-                <a href="#"></a>
-                <a href="#"></a>
+                <a href="https://coccusq.github.io/about">关于本站✓</a>
+                <a href="https://github.com/CoccusQ">GitHub↗</a>
             </div>
         </div>
     </nav>
 
-    <main class="main-content">
-        <section class="hero">
-            <h1>Welcome!</h1>
-            <p></p>
-        </section>
+    <section class="hero">
+        <h1>📣Welcome!🫵</h1>
+        <p>CoccusQ的个人博客网站</p>
+        <a href="https://coccusq.github.io/about" class="hero-cta">🥰 关于本站 👉 →</a>
+    </section>
 
+    <main class="main-content">
         <div class="blog-grid">
             <!-- 博客文章示例 -->
-            <article class="blog-card">
-                <span class="blog-date">2024年10月24日</span>
-                <a href="https://coccusq.github.io/c-stl-vector" class="blog-title-link">
-                    <h2 class="blog-title">C语言实现STL：vector 动态数组</h2>
-                </a>
-                <p>C语言实现动态数组的原理并不复杂，只需要实现数组元素的插入和删除、随机访问以及根据当前数组内元素数量自动调整数组占用内存大小的功能即可...</p>
-            </article>
-
             <article class="blog-card">
                 <span class="blog-date">2024年10月31日</span>
                 <a href="https://coccusq.github.io/c-stl-list" class="blog-title-link">
@@ -199,17 +247,25 @@
             </article>
 
             <article class="blog-card">
-                <span class="blog-date"></span>
-                <a href="#" class="blog-title-link">
-                    <h2 class="blog-title"></h2>
+                <span class="blog-date">2024年10月24日</span>
+                <a href="https://coccusq.github.io/c-stl-vector" class="blog-title-link">
+                    <h2 class="blog-title">C语言实现STL：vector 动态数组</h2>
                 </a>
-                <p>To be continued...</p>
+                <p>C语言实现动态数组的原理并不复杂，只需要实现数组元素的插入和删除、随机访问以及根据当前数组内元素数量自动调整数组占用内存大小的功能即可...</p>
+            </article>
+
+            <article class="blog-card">
+                <span class="blog-date">In the future</span>
+                <a href="#" class="blog-title-link">
+                    <h2 class="blog-title">To be continued...✍️</h2>
+                </a>
+                <p></p>
             </article>
         </div>
     </main>
 
     <footer class="footer">
-        <p>By CoccusQ 2025</p>
+        <p>© 2025 CoccusQ 🇨🇳</p>
     </footer>
 </body>
 </html>
