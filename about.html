@@ -336,6 +336,39 @@
                 text-align: center;
             }
         }
+
+        .iframe-container {
+            max-width: 100%;
+            margin: 3rem auto 0;
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 这里的数值可以根据嵌入内容的宽高比调整 */
+            background-color: #f8f9fa; /* 背景颜色可以自定义 */
+        }
+
+        .embedded-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            aspect-ratio: 16/9; /* 根据嵌入内容调整宽高比 */
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .iframe-container {
+                padding-bottom: 50%; /* 调整宽高比 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -362,75 +395,8 @@
         </div>
     </nav>
 
-    <section class="hero">
-        <h1>📣Welcome!🫵</h1>
-        <p>CoccusQ的个人博客网站</p>
-        <a href="https://coccusq.github.io/about" class="hero-cta">🥰 关于本站 👉 →</a>
-    </section>
-
-    <main class="main-content">
-        <div class="blog-grid">
-            <!-- 博客文章示例 -->
-            <article class="blog-card">
-                <span class="blog-date">2024年10月31日</span>
-                <a href="https://coccusq.github.io/c-stl-list" class="blog-title-link">
-                    <h2 class="blog-title">C语言实现STL：list 双向循环链表</h2>
-                </a>
-                <p>有了之前使用C语言实现动态数组的经验，实现双向循环链表就变得简单了很多，重点不再是实现任意类型数据的存储，而是双向循环链表的设计...</p>
-            </article>
-
-            <article class="blog-card">
-                <span class="blog-date">2024年10月24日</span>
-                <a href="https://coccusq.github.io/c-stl-vector" class="blog-title-link">
-                    <h2 class="blog-title">C语言实现STL：vector 动态数组</h2>
-                </a>
-                <p>C语言实现动态数组的原理并不复杂，只需要实现数组元素的插入和删除、随机访问以及根据当前数组内元素数量自动调整数组占用内存大小的功能即可...</p>
-            </article>
-
-            <article class="blog-card">
-                <span class="blog-date">In the future</span>
-                <a href="#" class="blog-title-link">
-                    <h2 class="blog-title">To be continued...✍️</h2>
-                </a>
-                <p></p>
-            </article>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-container">
-            
-            <div class="footer-column">
-                <h4 class="footer-title">About us</h4>
-                <div class="footer-links">
-                    <a href="https://coccusq.github.io/about">Learn More✒️</a>
-                </div>
-            </div>
-
-            <div class="footer-column">
-                <h4 class="footer-title">Useful Tools</h4>
-                <div class="footer-links">
-                    <a href="https://chat.deepseek.com/">DeepSeek🤖</a>
-                    <a href="https://github.com/cayxc/Mdtht">Mdtht</a>
-                </div>
-            </div>
-
-            
-            <div class="footer-column">
-                <h4 class="footer-title">Social</h4>
-                <div class="footer-links">
-                    <a href="mailto:king_crab_cn@outlook.com">Email📧</a>
-                    <a href="https://github.com/CoccusQ/coccusq.github.io">GitHub↗</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 新增分隔线 -->
-        <div class="footer-divider"></div>
-
-        <div class="footer-copyright">
-            <p>© 2025 CoccusQ 🇨🇳. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="iframe-container">
+        <iframe class="embedded-iframe" src="aboutus.html" frameborder="0" allowfullscreen></iframe>
+    </div>
 </body>
 </html>
