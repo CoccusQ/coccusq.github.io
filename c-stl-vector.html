@@ -1,284 +1,958 @@
-<!DOCTYPE html><html><head>
-      <title>c-stl-vector</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      
-      <link rel="stylesheet" href="file:///c:\Users\lenovo\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.15\crossnote\dependencies\katex\katex.min.css">
-      <link rel="stylesheet" href="./dist/mdtht.min.css">
-      <script src="./dist/mdtht.min.js"></script>
-      
-      
-      
-      
-      <style>
-      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
-/* Please visit the URL below for more information: */
-/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+<!DOCTYPE html>
+<html lang="zh-CN">
 
-      </style>
-      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
-  document.addEventListener("DOMContentLoaded", function () {
-    // your code here
-  });
-</script></head><body for="html-export">
-    
-    
-      <div class="crossnote markdown-preview  ">
-      
-<h1 id="homehttpscoccusqgithubio"><a href="https://coccusq.github.io/">Home</a> </h1>
-<h1 id="c语言实现stlvector动态数组">C语言实现STL：vector（动态数组） </h1>
-<h4 id="by-coccusqhttpsgithubcomcoccusq-20241031">By <a href="https://github.com/CoccusQ">CoccusQ</a> 2024.10.31 </h4>
-<ul>
-<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90">正片开始：代码分析</a></li>
-<li><a href="#%E5%B0%8F%E7%BB%93%E4%B8%80%E4%B8%8B">小结一下</a></li>
-<li><a href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81">补充：完整代码</a></li>
-</ul>
-<h3 id="前言">前言 </h3>
-<p>C语言实现动态数组的原理并不复杂，只需要实现数组元素的插入和删除、随机访问以及根据当前数组内元素数量自动调整数组占用内存大小的功能即可。</p>
-<p>唯一的难点在于存储不同类型的数据。C++ STL中的<code>vector</code>利用了C++的模板功能，能够存储任意类型数据，而想要在C语言中实现类似的功能，就需要利用到<code>void*</code>指针。<code>void*</code>指针只存储一个地址，而不关心这个地址内存储的数据类型，因此我们只需要按照不同数据类型的字节数来访问<code>void*</code>中的数据。</p>
-<p>例如，如果我们要动态分配一块内存给一个<code>int</code>数组，常规做法就是使用<code>stdlib.h</code>中的<code>malloc</code>函数，代码如下：</p>
-<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token keyword keyword-int">int</span> num <span class="token operator">=</span> <span class="token number">24</span><span class="token punctuation">;</span>
-<span class="token keyword keyword-int">int</span><span class="token operator">*</span> array <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span><span class="token keyword keyword-int">int</span><span class="token punctuation">)</span> <span class="token operator">*</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre><p>事实上，无论<code>malloc</code>还是<code>calloc</code>、<code>realloc</code>，这些函数返回的内存地址都是以<code>void*</code>指针作为载体的，而内存的分配过程也是“简单粗暴”地将<code>int</code>的字节数乘上数组的元素个数，而程序员在访问内存的时候只要以<code>int</code>的字节数为单位进行，数据就不会出错。</p>
-<h3 id="代码分析">代码分析 </h3>
-<p>以下是实现代码：</p>
-<h4 id="初始化操作">初始化操作 </h4>
-<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token comment">/*vector结构体*/</span>
-<span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-int">int</span> capacity<span class="token punctuation">;</span>
-    <span class="token keyword keyword-int">int</span> size<span class="token punctuation">;</span>
-    <span class="token keyword keyword-void">void</span><span class="token operator">*</span> items<span class="token punctuation">;</span>
-    <span class="token class-name">size_t</span> sizeOfType<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C语言实现STL：vector（动态数组）</title>
 
-<span class="token comment">/*构造函数，分配初始内存空间*/</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_init</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> capacity<span class="token punctuation">,</span> <span class="token class-name">size_t</span> sizeOfType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    v<span class="token operator">-&gt;</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">=</span> sizeOfType<span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>size <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>items <span class="token operator">=</span> <span class="token function">calloc</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token function">exit</span><span class="token punctuation">(</span>errno<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    <!-- 代码高亮 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
 
-<span class="token comment">/*重新调整数组大小，且原来的元素不会丢失*/</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_resize</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> capacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-void">void</span><span class="token operator">*</span> temp <span class="token operator">=</span> v<span class="token operator">-&gt;</span>items<span class="token punctuation">;</span>
-    <span class="token keyword keyword-int">int</span> temp_cap <span class="token operator">=</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>items <span class="token operator">=</span> <span class="token function">realloc</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token function">exit</span><span class="token punctuation">(</span>errno<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">!=</span> temp<span class="token punctuation">)</span>
-        <span class="token function">memmove</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items<span class="token punctuation">,</span> temp<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> temp_cap<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre><p>其中，<code>vector</code>类（其实是结构体）的数据成员有容量<code>capacity</code>、元素个数<code>size</code>、指向数组首地址的指针<code>item</code>、当前数组内存放数据的字节数<code>sizeOfType</code>，<code>vector_init</code>函数和<code>vector_resize</code>函数的内存分配过程均是以<code>sizeOfType</code>为单位进行。</p>
-<p>细节：</p>
-<ul>
-<li>
-<p>在复制整个数组时，采用<code>memmove</code>而不是<code>memcpy</code>，因为在重新分配内存时新的内存空间可能和旧的空间有重合，这种重合的情况在<code>memcpy</code>是未定义行为，而<code>memmove</code>会在遇到重合的时候创建一个临时缓冲区进行复制，更安全。</p>
-</li>
-<li>
-<p><code>calloc</code>和<code>realloc</code>：与<code>malloc</code>不同，<code>calloc</code>在分配内存时还会把每个元素初始化为0；而<code>realloc</code>会尝试在原来的地址处调整内存空间大小，如果空间足够，原来的数据就不会丢失，只有空间不够的情况下才会重新找一块内存，这时候原来的数据就不能一起迁移过来，需要重新复制一遍，<code>vector_resize</code>函数的最后两行就是在做这个判断（如果新分配的指针地址和原来不一样，说明起始地址变了，需要  复制原来的数据到新的内存空间里）。</p>
-</li>
-</ul>
-<h4 id="插入元素">插入元素 </h4>
-<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token comment">/*在尾部插入元素*/</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_push_back</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-void">void</span><span class="token operator">*</span> item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">)</span>
-        <span class="token function">vector_resize</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">memcpy</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">,</span> item<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>size<span class="token operator">++</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+    <style>
+        /* === 全局样式 === */
+        :root {
+            --primary-color: #2e8555;
+            --secondary-color: #2b3137;
+            --footer-color: #303846;
+            --text-color: #24292e;
+            --bg-color: #ffffff;
+            --nav-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --code-bg: #f6f8fa;
+            --border-color: #e1e4e8;
+        }
 
-<span class="token comment">/*在给定位置插入元素*/</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_insert</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-void">void</span><span class="token operator">*</span> item<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">vector_push_back</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> item<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
-        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">)</span>
-            <span class="token function">vector_resize</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">memmove</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> index <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">-</span> index<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        v<span class="token operator">-&gt;</span>size<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token function">memcpy</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>index <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">,</span> item<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre><h4 id="删除元素">删除元素 </h4>
-<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token comment">/*删除尾部元素*/</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_pop_back</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>size<span class="token operator">--</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&lt;</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span> 
-        <span class="token function">vector_resize</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        html {
+            scroll-behavior: smooth;
+        }
 
-<span class="token comment">/*删除给定位置的元素*/</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_erase</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> index <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>size<span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">==</span> v<span class="token operator">-&gt;</span>size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">vector_pop_back</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
-        <span class="token function">memmove</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> index <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">-</span> index <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        v<span class="token operator">-&gt;</span>size<span class="token operator">--</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&lt;</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span>
-            <span class="token function">vector_resize</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre><h4 id="实现元素随机访问">实现元素随机访问 </h4>
-<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token comment">/*访问头部元素*/</span>
-<span class="token keyword keyword-void">void</span><span class="token operator">*</span> <span class="token function">vector_front</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-return">return</span> v<span class="token operator">-&gt;</span>items<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
 
-<span class="token comment">/*访问尾部元素*/</span>
-<span class="token keyword keyword-void">void</span><span class="token operator">*</span> <span class="token function">vector_back</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-return">return</span> v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
 
-<span class="token comment">/*随机访问元素*/</span>
-<span class="token keyword keyword-void">void</span><span class="token operator">*</span> <span class="token function">vector_get</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> index <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>size<span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-return">return</span> v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> index <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre><p>访问时的<code>v-&gt;sizeOfType</code>就是在按照元素类型的字节数访问，保证读取的数据正确。</p>
-<h4 id="清零和析构操作">清零和析构操作 </h4>
-<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token comment">/*清空数组*/</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_clear</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
-    <span class="token function">memset</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        /* === 滚动边距 === */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            scroll-margin-top: 80px;
+            /* 根据导航栏高度调整 */
+        }
 
-<span class="token comment">/*析构函数，释放动态分配的内存*/</span>
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_free</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">free</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre><h4 id="一些宏定义">一些宏定义 </h4>
-<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token comment">/*简化构造函数的调用*/</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VECTOR</span><span class="token expression"><span class="token punctuation">(</span>type<span class="token punctuation">,</span> name<span class="token punctuation">,</span> capacity<span class="token punctuation">)</span> <span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span> name<span class="token punctuation">;</span> <span class="token function">vector_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>name<span class="token punctuation">,</span> capacity<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span></span></span>
+        /* === 导航栏样式 === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            box-shadow: var(--nav-shadow);
+            padding: 0.5rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
 
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VECTOR_GET</span><span class="token expression"><span class="token punctuation">(</span>type<span class="token punctuation">,</span> name<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">*</span><span class="token punctuation">(</span>type<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">vector_get</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>name<span class="token punctuation">,</span> index<span class="token punctuation">)</span></span></span>
+        .navbar.scrolled {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 0.8rem 0;
+        }
 
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VECTOR_FRONT</span><span class="token expression"><span class="token punctuation">(</span>type<span class="token punctuation">,</span> name<span class="token punctuation">)</span> <span class="token operator">*</span><span class="token punctuation">(</span>type<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">vector_front</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>name<span class="token punctuation">)</span></span></span>
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VECTOR_BACK</span><span class="token expression"><span class="token punctuation">(</span>type<span class="token punctuation">,</span> name<span class="token punctuation">)</span> <span class="token operator">*</span><span class="token punctuation">(</span>type<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">vector_back</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>name<span class="token punctuation">)</span></span></span>
-</code></pre><p>利用宏的替换机制，实现类似于C++模板的编译时替换操作；同时将动态数组的随机访问函数的返回值进行操作，将原来的<code>void*</code>类型依据数据类型转换成数值，便于进行赋值操作。</p>
-<p>（ps：这一部分对c语言宏的使用是我感觉最有意思的地方。）</p>
-<h3 id="小结一下">小结一下 </h3>
-<p>这是C语言实现STL系列的第一个尝试，由于语言特点和个人技术，最终的使用效果和性能离STL这种工业级轮子有很大的差距，不过使用C语言的种种特性来完成一些巧妙的操作还是非常有意思的，尤其是利用<code>void*</code>类型实现不同类型数据的存储（其实这里的灵感也来源于标准库里的<code>malloc</code>函数申请内存的用法）</p>
-<p>最后是完整的头文件代码：</p>
-<h4 id="完整代码">完整代码 </h4>
-<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token comment">/*vector.h*/</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_VECTOR_H_</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_VECTOR_H_</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;errno.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VECTOR</span><span class="token expression"><span class="token punctuation">(</span>type<span class="token punctuation">,</span> name<span class="token punctuation">,</span> capacity<span class="token punctuation">)</span> <span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span> name<span class="token punctuation">;</span> <span class="token function">vector_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>name<span class="token punctuation">,</span> capacity<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">)</span></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VECTOR_GET</span><span class="token expression"><span class="token punctuation">(</span>type<span class="token punctuation">,</span> name<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token operator">*</span><span class="token punctuation">(</span>type<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">vector_get</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>name<span class="token punctuation">,</span> index<span class="token punctuation">)</span></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VECTOR_FRONT</span><span class="token expression"><span class="token punctuation">(</span>type<span class="token punctuation">,</span> name<span class="token punctuation">)</span> <span class="token operator">*</span><span class="token punctuation">(</span>type<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">vector_front</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>name<span class="token punctuation">)</span></span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">VECTOR_BACK</span><span class="token expression"><span class="token punctuation">(</span>type<span class="token punctuation">,</span> name<span class="token punctuation">)</span> <span class="token operator">*</span><span class="token punctuation">(</span>type<span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">vector_back</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>name<span class="token punctuation">)</span></span></span>
+        .navbar-logo {
+            color: var(--secondary-color) !important;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            font-size: larger;
+            transition: all 0.3s ease;
+        }
 
-<span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-int">int</span> capacity<span class="token punctuation">;</span>
-    <span class="token keyword keyword-int">int</span> size<span class="token punctuation">;</span>
-    <span class="token keyword keyword-void">void</span><span class="token operator">*</span> items<span class="token punctuation">;</span>
-    <span class="token class-name">size_t</span> sizeOfType<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
+        .navbar-logo:hover {
+            color: var(--primary-color) !important;
+            transform: scale(1.05);
+        }
 
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_init</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> capacity<span class="token punctuation">,</span> <span class="token class-name">size_t</span> sizeOfType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    v<span class="token operator">-&gt;</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">=</span> sizeOfType<span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>size <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>items <span class="token operator">=</span> <span class="token function">calloc</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token function">exit</span><span class="token punctuation">(</span>errno<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        .navbar-links {
+            display: flex;
+            gap: 1rem;
+        }
 
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_resize</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> capacity<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-void">void</span><span class="token operator">*</span> temp <span class="token operator">=</span> v<span class="token operator">-&gt;</span>items<span class="token punctuation">;</span>
-    <span class="token keyword keyword-int">int</span> temp_cap <span class="token operator">=</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>items <span class="token operator">=</span> <span class="token function">realloc</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token function">exit</span><span class="token punctuation">(</span>errno<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">!=</span> temp<span class="token punctuation">)</span>
-        <span class="token function">memmove</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items<span class="token punctuation">,</span> temp<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> temp_cap<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        .navbar-links a {
+            color: var(--text-color) !important;
+            position: relative;
+            padding: 0.6rem 1rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
 
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_push_back</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-void">void</span><span class="token operator">*</span> item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">)</span>
-        <span class="token function">vector_resize</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">memcpy</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">,</span> item<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>size<span class="token operator">++</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        .navbar-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
 
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_pop_back</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
-    v<span class="token operator">-&gt;</span>size<span class="token operator">--</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&lt;</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span> 
-        <span class="token function">vector_resize</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        .navbar-links a:hover::after {
+            width: 100%;
+        }
 
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_insert</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-void">void</span><span class="token operator">*</span> item<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">vector_push_back</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> item<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
-        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">)</span>
-            <span class="token function">vector_resize</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">memmove</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> index <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">-</span> index<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        v<span class="token operator">-&gt;</span>size<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token function">memcpy</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>index <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">,</span> item<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+        /* === 侧边栏样式 === */
+        .sidebar {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 260px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding: 1rem;
+            background: var(--bg-color);
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
 
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_erase</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> index <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>size<span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">==</span> v<span class="token operator">-&gt;</span>size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">vector_pop_back</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword keyword-else">else</span> <span class="token punctuation">{</span>
-        <span class="token function">memmove</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> index <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">-</span> index <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        v<span class="token operator">-&gt;</span>size<span class="token operator">--</span><span class="token punctuation">;</span>
-        <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&lt;</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span>
-            <span class="token function">vector_resize</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>capacity <span class="token operator">/</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+        .sidebar-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
 
-<span class="token keyword keyword-void">void</span><span class="token operator">*</span> <span class="token function">vector_front</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-return">return</span> v<span class="token operator">-&gt;</span>items<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        .sidebar-nav {
+            list-style: none;
+            padding-left: 0.5rem;
+        }
 
-<span class="token keyword keyword-void">void</span><span class="token operator">*</span> <span class="token function">vector_back</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-return">return</span> v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        .sidebar-nav li {
+            margin: 0.4rem 0;
+            line-height: 1.4;
+        }
 
-<span class="token keyword keyword-void">void</span><span class="token operator">*</span> <span class="token function">vector_get</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">,</span> <span class="token keyword keyword-int">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>index <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">||</span> index <span class="token operator">&gt;=</span> v<span class="token operator">-&gt;</span>size<span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
-    <span class="token keyword keyword-return">return</span> v<span class="token operator">-&gt;</span>items <span class="token operator">+</span> index <span class="token operator">*</span> v<span class="token operator">-&gt;</span>sizeOfType<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        .sidebar-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
 
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_clear</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword keyword-return">return</span><span class="token punctuation">;</span>
-    <span class="token function">memset</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> v<span class="token operator">-&gt;</span>sizeOfType <span class="token operator">*</span> v<span class="token operator">-&gt;</span>capacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+        .sidebar-nav a:hover {
+            background: rgba(46, 133, 85, 0.1);
+            color: var(--primary-color);
+        }
 
-<span class="token keyword keyword-void">void</span> <span class="token function">vector_free</span><span class="token punctuation">(</span><span class="token keyword keyword-struct">struct</span> <span class="token class-name">vector</span><span class="token operator">*</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">free</span><span class="token punctuation">(</span>v<span class="token operator">-&gt;</span>items<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
-</code></pre>
-      </div>
-      
-      
-    
-    
-    
-    
-    
-    
-  
-    </body></html>
+        .sidebar-nav .active>a {
+            background: rgba(46, 133, 85, 0.15);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* === 主内容区样式 === */
+        .main-content {
+            margin: 80px auto 0;
+            padding: 2rem;
+            max-width: 800px;
+            margin-right: 300px;
+        }
+
+        .article-header {
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        .article-title {
+            font-size: 2.2rem;
+            margin: 0 0 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .article-meta {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .article-meta a {
+            text-decoration: none;
+        }
+
+        .section {
+            margin: 2rem 0;
+        }
+
+        .section a {
+            text-decoration: none;
+        }
+
+        h2.section-title {
+            color: var(--text-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 2rem 0;
+        }
+
+        h3.subsection-title {
+            color: #333;
+            margin: 1.5rem 0 1rem;
+        }
+
+        /* === 代码区块样式 === */
+        pre[class*="language-"] {
+            background: var(--code-bg);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin: 1.5rem 0;
+            padding: 1.25rem 1.5rem;
+            padding-top: 0;
+            padding-bottom: 0;
+            overflow: auto;
+        }
+
+        code {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        /* === 注意事项样式 === */
+        .note {
+            background: #f3f5f7;
+            border-left: 4px solid #6cb2eb;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .note ul {
+            padding-left: 1rem;
+        }
+
+        .note-date {
+            color: #666;
+            font-size: 0.9rem;
+            font-family: Consolas, monospace;
+            padding: 0.5rem;
+        }
+
+        /* === 索引卡片样式 === */
+        .guide-content {
+            margin: 80px auto 0;
+            padding: 2rem;
+            padding-top: 0;
+            padding-bottom: 1rem;
+            max-width: 700px;
+            margin-right: 360px;
+        }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        .guide-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .guide-card-left {
+            text-align: left;
+        }
+
+        .guide-card-right {
+            text-align: right;
+        }
+
+        .guide-date {
+            color: #666;
+            font-size: 0.9rem;
+            padding: 0.5rem;
+        }
+
+        .guide-title {
+            color: var(--primary-color);
+            margin: 0rem 0;
+            font-size: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .guide-title-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .guide-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .guide-card-link:hover .guide-title {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .guide-card-link:focus {
+            outline: 2px solid var(--secondary-color);
+            outline-offset: 2px;
+        }
+
+        /* === 页脚样式 === */
+        .footer {
+            background-color: var(--footer-color);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            flex: 0 1 280px;
+            padding: 0 1rem;
+        }
+
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-divider {
+            width: 100%;
+            margin: 2rem 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+            height: 2px;
+            position: relative;
+        }
+
+        .footer-divider::after {
+            content: "✦";
+            position: absolute;
+            left: 50%;
+            top: -10px;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            padding-top: 0rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* === 响应式设计 === */
+        @media (max-width: 1200px) {
+            .sidebar {
+                right: -280px;
+                z-index: 999;
+            }
+
+            .sidebar.active {
+                right: 20px;
+            }
+
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                right: 20px;
+                bottom: 20px;
+                background: var(--primary-color);
+                color: white;
+                padding: 0.8rem;
+                border-radius: 50%;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+            }
+
+            .main-content {
+                margin-right: 0;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+
+            pre[class*="language-"] {
+                padding: 1rem;
+                font-size: 0.85em;
+            }
+
+            .footer-column {
+                flex: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="https://coccusq.github.io" class="navbar-logo">CoccusQ</a>
+            <div class="navbar-links">
+                <a href="https://coccusq.github.io/about">关于本站✓</a>
+                <a href="https://github.com/CoccusQ/coccusq.github.io">GitHub↗</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <div class="sidebar-header">文档目录</div>
+        <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    </aside>
+    <div class="sidebar-toggle">☰</div>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+        <!--TODO:-->
+        <!-- 文章标题 -->
+        <header class="article-header">
+            <h1 class="article-title" id="headline">C语言实现STL：vector（动态数组）</h1>
+            <div class="article-meta">
+                By <a href="https://github.com/CoccusQ">CoccusQ</a> · 2025.2.28 Update
+            </div>
+        </header>
+        <!-- 文章内容 -->
+        <section class="section">
+            <h2 class="section-title" id="前言">前言</h2>
+            <p>C语言实现动态数组的原理并不复杂，只需要实现数组元素的插入和删除、随机访问以及根据当前数组内元素数量自动调整数组占用内存大小的功能即可。</p>
+            <p>唯一的难点在于存储不同类型的数据。C++
+                STL中的<code>vector</code>利用了C++的模板功能，能够存储任意类型数据，而想要在C语言中实现类似的功能，就需要利用到<code>void*</code>指针。<code>void*</code>指针只存储一个地址，而不关心这个地址内存储的数据类型，因此我们只需要按照不同数据类型的字节数来访问<code>void*</code>中的数据。
+            </p>
+            <p>例如，如果我们要动态分配一块内存给一个<code>int</code>数组，常规做法就是使用<code>stdlib.h</code>中的<code>malloc</code>函数，代码如下：</p>
+            <pre class="language-c"><code>
+int num = 24;
+int* array = (int*)malloc(sizeof(int) * num);
+            </code></pre>
+            <p>事实上，无论<code>malloc</code>还是<code>calloc</code>、<code>realloc</code>，这些函数返回的内存地址都是以<code>void*</code>指针作为载体的，而内存的分配过程也是“简单粗暴”地将<code>int</code>的字节数乘上数组的元素个数，而程序员在访问内存的时候只要以<code>int</code>的字节数为单位进行，数据就不会出错。
+            </p>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="代码分析">代码分析</h2>
+            <p>以下是实现代码：</p>
+            <div class="subsection">
+                <h3 class="section-title" id="初始化操作">初始化操作</h3>
+                <pre class="language-c"><code>
+/*vector结构体*/
+struct vector {
+int capacity;
+int size;
+void* items;
+size_t sizeOfType;
+};
+
+/*构造函数，分配初始内存空间*/
+void vector_init(struct vector* v, int capacity, size_t sizeOfType) {
+v->capacity = capacity;
+v->sizeOfType = sizeOfType;
+v->size = 0;
+v->items = calloc(v->capacity, v->sizeOfType);
+if (v->items == NULL) exit(errno);
+}
+
+/*重新调整数组大小，且原来的元素不会丢失*/
+void vector_resize(struct vector* v, int capacity) {
+void* temp = v->items;
+int temp_cap = v->capacity;
+v->capacity = capacity;
+v->items = realloc(v->items, v->sizeOfType * v->capacity);
+if (v->items == NULL) exit(errno);
+if (v->items != temp)
+memmove(v->items, temp, v->sizeOfType * temp_cap);
+}
+                </code></pre>
+                <p>其中，<code>vector</code>类（其实是结构体）的数据成员有容量<code>capacity</code>、元素个数<code>size</code>、指向数组首地址的指针<code>item</code>、当前数组内存放数据的字节数<code>sizeOfType</code>，<code>vector_init</code>函数和<code>vector_resize</code>函数的内存分配过程均是以<code>sizeOfType</code>为单位进行。</p>
+                <div class="note">
+                    <strong>细节：</strong>
+                    <ul>
+                        <li><p>在复制整个数组时，采用<code>memmove</code>而不是<code>memcpy</code>，因为在重新分配内存时新的内存空间可能和旧的空间有重合，这种重合的情况在<code>memcpy</code>是未定义行为，而<code>memmove</code>会在遇到重合的时候创建一个临时缓冲区进行复制，更安全。</p></li>
+                        <li><p><code>calloc</code>和<code>realloc</code>：与<code>malloc</code>不同，<code>calloc</code>在分配内存时还会把每个元素初始化为0；而<code>realloc</code>会尝试在原来的地址处调整内存空间大小，如果空间足够，原来的数据就不会丢失，只有空间不够的情况下才会重新找一块内存，这时候原来的数据就不能一起迁移过来，需要重新复制一遍，<code>vector_resize</code>函数的最后两行就是在做这个判断（如果新分配的指针地址和原来不一样，说明起始地址变了，需要  复制原来的数据到新的内存空间里）。</p></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="subsection">
+                <h3 class="subsection-title" id="插入元素">插入元素</h3>
+                <pre class="language-c"><code>
+/*在尾部插入元素*/
+void vector_push_back(struct vector* v, void* item) {
+    if (v->size >= v->capacity)
+        vector_resize(v, v->capacity * 2);
+    memcpy(v->items + (v->size * v->sizeOfType), item, v->sizeOfType);
+    v->size++;
+}
+
+/*在给定位置插入元素*/
+void vector_insert(struct vector* v, void* item, int index) {
+    if (index < 0) return;
+    if (index >= v->size) {
+        vector_push_back(v, item);
+    }
+    else {
+        if (v->size >= v->capacity)
+            vector_resize(v, v->capacity * 2);
+        memmove(v->items + (index + 1) * v->sizeOfType, v->items + index * v->sizeOfType, v->sizeOfType * (v->size - index));
+        v->size++;
+        memcpy(v->items + (index * v->sizeOfType), item, v->sizeOfType);
+    }
+}
+                </code></pre>
+            </div>
+            <div class="subsection">
+                <h3 class="subsection-title" id="删除元素">删除元素</h3>
+                <pre class="language-c"><code>
+/*删除尾部元素*/
+void vector_pop_back(struct vector* v) {
+    if (v->size <= 0) return;
+    v->size--;
+    if (v->size < v->capacity / 3) 
+        vector_resize(v, v->capacity / 2);
+}
+
+/*删除给定位置的元素*/
+void vector_erase(struct vector* v, int index) {
+    if (index < 0 || index >= v->size) return;
+    if (index == v->size - 1) {
+        vector_pop_back(v);
+    }
+    else {
+        memmove(v->items + index * v->sizeOfType, v->items + (index + 1) * v->sizeOfType, v->sizeOfType * (v->size - index - 1));
+        v->size--;
+        if (v->size < v->capacity / 3)
+            vector_resize(v, v->capacity / 3);
+    }
+}
+                </code></pre> 
+            </div>
+            <div class="subsection">
+                <h3 class="subsection-title" id="实现元素随机访问">实现元素随机访问</h3>
+                <pre class="language-c"><code>
+/*访问头部元素*/
+void* vector_front(struct vector* v) {
+    return v->items;
+}
+
+/*访问尾部元素*/
+void* vector_back(struct vector* v) {
+    if (v->size < 1) return NULL;
+    return v->items + (v->size - 1) * v->sizeOfType;
+}
+
+/*随机访问元素*/
+void* vector_get(struct vector* v, int index) {
+    if (index < 0 || index >= v->size) return NULL;
+    return v->items + index * v->sizeOfType;
+}
+                </code></pre>
+                <div class="note">
+                    <p>访问时的<code>v-&gt;sizeOfType</code>就是在按照元素类型的字节数访问，保证读取的数据正确。</p>
+                </div>
+            </div>
+            <div class="subsection">
+                <h3 class="subsection-title" id="清零和析构操作">清零和析构操作</h3>
+                <pre class="language-c"><code>
+/*清空数组*/
+void vector_clear(struct vector* v) {
+    if (v->size == 0) return;
+    memset(v->items, 0, v->sizeOfType * v->capacity);
+}
+
+/*析构函数，释放动态分配的内存*/
+void vector_free(struct vector* v) {
+    free(v->items);
+}
+                </code></pre>
+                
+            </div>
+            <div class="subsection">
+                <h3 class="subsection-title" id="一些宏定义">一些宏定义</h3>
+                <pre class="language-c"><code>
+/*简化构造函数的调用*/
+#define VECTOR(type, name, capacity) struct vector name; vector_init(&name, capacity, sizeof(type))
+
+#define VECTOR_GET(type, name, index) *(type*)vector_get(&name, index)
+
+#define VECTOR_FRONT(type, name) *(type*)vector_front(&name)
+
+#define VECTOR_BACK(type, name) *(type*)vector_back(&name)
+                </code></pre>
+                <p>利用宏的替换机制，实现类似于C++模板的编译时替换操作；同时将动态数组的随机访问函数的返回值进行操作，将原来的<code>void*</code>类型依据数据类型转换成数值，便于进行赋值操作。</p>
+                <p>（ps：这一部分对c语言宏的使用是我感觉最有意思的地方。）</p>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="小结一下">小结一下</h2>
+            <p>这是C语言实现STL系列的第一个尝试，由于语言特点和个人技术，最终的使用效果和性能离STL这种工业级轮子有很大的差距，不过使用C语言的种种特性来完成一些巧妙的操作还是非常有意思的，尤其是利用<code>void*</code>类型实现不同类型数据的存储（其实这里的灵感也来源于标准库里的<code>malloc</code>函数申请内存的用法）</p>
+            <p>最后是完整的头文件代码：</p>
+            <div class="subsection">
+                <h3 class="subsection-title" id="完整代码">完整代码</h3>
+                <pre class="language-c"><code>
+/*vector.h*/
+#ifndef _VECTOR_H_
+#define _VECTOR_H_
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#define VECTOR(type, name, capacity) struct vector name; vector_init(&name, capacity, sizeof(type))
+#define VECTOR_GET(type, name, index) *(type*)vector_get(&name, index)
+#define VECTOR_FRONT(type, name) *(type*)vector_front(&name)
+#define VECTOR_BACK(type, name) *(type*)vector_back(&name)
+
+struct vector {
+    int capacity;
+    int size;
+    void* items;
+    size_t sizeOfType;
+};
+
+void vector_init(struct vector* v, int capacity, size_t sizeOfType) {
+    v->capacity = capacity;
+    v->sizeOfType = sizeOfType;
+    v->size = 0;
+    v->items = calloc(v->capacity, v->sizeOfType);
+    if (v->items == NULL) exit(errno);
+}
+
+void vector_resize(struct vector* v, int capacity) {
+    void* temp = v->items;
+    int temp_cap = v->capacity;
+    v->capacity = capacity;
+    v->items = realloc(v->items, v->sizeOfType * v->capacity);
+    if (v->items == NULL) exit(errno);
+    if (v->items != temp)
+        memmove(v->items, temp, v->sizeOfType * temp_cap);
+}
+
+void vector_push_back(struct vector* v, void* item) {
+    if (v->size >= v->capacity)
+        vector_resize(v, v->capacity * 2);
+    memcpy(v->items + (v->size * v->sizeOfType), item, v->sizeOfType);
+    v->size++;
+}
+
+void vector_pop_back(struct vector* v) {
+    if (v->size <= 0) return;
+    v->size--;
+    if (v->size < v->capacity / 3) 
+        vector_resize(v, v->capacity / 2);
+}
+
+void vector_insert(struct vector* v, void* item, int index) {
+    if (index < 0) return;
+    if (index >= v->size) {
+        vector_push_back(v, item);
+    }
+    else {
+        if (v->size >= v->capacity)
+            vector_resize(v, v->capacity * 2);
+        memmove(v->items + (index + 1) * v->sizeOfType, v->items + index * v->sizeOfType, v->sizeOfType * (v->size - index));
+        v->size++;
+        memcpy(v->items + (index * v->sizeOfType), item, v->sizeOfType);
+    }
+}
+
+void vector_erase(struct vector* v, int index) {
+    if (index < 0 || index >= v->size) return;
+    if (index == v->size - 1) {
+        vector_pop_back(v);
+    }
+    else {
+        memmove(v->items + index * v->sizeOfType, v->items + (index + 1) * v->sizeOfType, v->sizeOfType * (v->size - index - 1));
+        v->size--;
+        if (v->size < v->capacity / 3)
+            vector_resize(v, v->capacity / 3);
+    }
+}
+
+void* vector_front(struct vector* v) {
+    return v->items;
+}
+
+void* vector_back(struct vector* v) {
+    if (v->size < 1) return NULL;
+    return v->items + (v->size - 1) * v->sizeOfType;
+}
+
+void* vector_get(struct vector* v, int index) {
+    if (index < 0 || index >= v->size) return NULL;
+    return v->items + index * v->sizeOfType;
+}
+
+void vector_clear(struct vector* v) {
+    if (v->size == 0) return;
+    memset(v->items, 0, v->sizeOfType * v->capacity);
+}
+
+void vector_free(struct vector* v) {
+    free(v->items);
+}
+#endif
+                </code></pre>
+            </div>
+        </section>
+
+        <!-- 其他代码区块同理 -->
+    </main>
+
+    <!-- 索引 -->
+    <div class="guide-content">
+        <div class="guide-grid">
+            <!-- 上一篇 -->
+            <article class="guide-card">
+                <div class="guide-card-left">
+                    <span class="guide-date">Last post</span>
+                    <a href="https://coccusq.github.io/about" class="guide-title-link">
+                        <h2 class="guide-title">« 关于本站</h2>
+                    </a>
+                </div>
+            </article>
+            <!-- 下一篇 -->
+            <article class="guide-card">
+                <div class="guide-card-right">
+                    <span class="guide-date">Next post</span>
+                    <a href="https://coccusq.github.io/c-stl-list" class="guide-title-link">
+                        <h2 class="guide-title">C语言实现STL：list（双向循环链表） »</h2>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4 class="footer-title">About us</h4>
+                <div class="footer-links">
+                    <a href="https://coccusq.github.io/about">Learn More✒️</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Useful Tools</h4>
+                <div class="footer-links">
+                    <a href="https://chat.deepseek.com">DeepSeek🤖</a>
+                    <a href="https://github.com/cayxc/Mdtht">Mdtht📑</a>
+                    <a href="https://www.emojiall.com">EMOJIALL😄</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Social</h4>
+                <div class="footer-links">
+                    <a href="mailto:king_crab_cn@outlook.com">Email📧</a>
+                    <a href="https://github.com/CoccusQ/coccusq.github.io">GitHub↗</a>
+                </div>
+            </div>
+        </div>
+        <!-- 新增分隔线 -->
+        <div class="footer-divider"></div>
+        <div class="footer-copyright">
+            <p>© 2025 CoccusQ 🇨🇳. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 全部JS代码 -->
+    <script>
+        // 侧边栏功能
+        class DocSidebar {
+            constructor() {
+                this.sidebar = document.querySelector('.sidebar');
+                this.navContainer = document.getElementById('sidebar-nav');
+                this.toggleButton = document.querySelector('.sidebar-toggle');
+                this.headers = [];
+                this.observer = null;
+                this.activeItem = null;
+
+                this.init();
+            }
+
+            init() {
+                // 获取所有标题
+                this.collectHeaders();
+                // 生成目录
+                this.generateTOC();
+                // 初始化交互
+                this.initEvents();
+                // 初始化滚动监听
+                this.initIntersectionObserver();
+            }
+
+            collectHeaders() {
+                const mainContent = document.querySelector('.main-content');
+                this.headers = Array.from(mainContent.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+                    .filter(header => header.id)
+                    .map(header => ({
+                        id: header.id,
+                        text: header.innerText,
+                        level: parseInt(header.tagName.substring(1))
+                    }));
+            }
+
+            // 修改目录生成逻辑
+            generateTOC() {
+                let html = '';
+                let stack = [];
+
+                this.headers.forEach(header => {
+                    while (stack.length > 0 && stack[stack.length - 1].level >= header.level) {
+                        html += '</ul>';
+                        stack.pop();
+                    }
+
+                    if (stack.length === 0 || header.level > stack[stack.length - 1].level) {
+                        html += '<ul>';
+                        stack.push(header);
+                    }
+
+                    html += `<li><a href="#${header.id}">${header.text}</a>`;
+                });
+
+                this.navContainer.innerHTML = html + '</ul>'.repeat(stack.length);
+            }
+
+            initEvents() {
+                // 点击目录平滑滚动
+                this.navContainer.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A') {
+                        e.preventDefault();
+                        const targetId = e.target.getAttribute('href');
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+
+                // 移动端切换按钮
+                this.toggleButton.addEventListener('click', () => {
+                    this.sidebar.classList.toggle('active');
+                });
+            }
+
+            // 在DocSidebar类中添加
+            initCollapse() {
+                this.navContainer.addEventListener('click', (e) => {
+                    const listItem = e.target.closest('li');
+                    if (listItem && listItem.children.length > 1) {
+                        listItem.classList.toggle('collapsed');
+                    }
+                });
+            }
+
+            initIntersectionObserver() {
+                const options = {
+                    rootMargin: '-50px 0px -50% 0px',
+                    threshold: 0
+                };
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const id = entry.target.id;
+                        const navItem = this.navContainer.querySelector(`a[href="#${id}"]`);
+
+                        if (entry.isIntersecting) {
+                            if (this.activeItem) {
+                                this.activeItem.parentElement.classList.remove('active');
+                            }
+                            navItem.parentElement.classList.add('active');
+                            this.activeItem = navItem;
+                        }
+                    });
+                }, options);
+
+                // 观察所有标题元素
+                this.headers.forEach(header => {
+                    const element = document.getElementById(header.id);
+                    if (element) this.observer.observe(element);
+                });
+            }
+        }
+
+        // 初始化侧边栏
+        document.addEventListener('DOMContentLoaded', () => {
+            new DocSidebar();
+        });
+
+        // 保持原有滚动监听
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+
+    <!-- 代码高亮脚本 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-c.min.js"></script>
+</body>
+
+</html>
