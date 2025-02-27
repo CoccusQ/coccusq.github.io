@@ -39,6 +39,17 @@
             line-height: 1.6;
         }
 
+        /* === 滚动边距 === */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            scroll-margin-top: 80px;
+            /* 根据导航栏高度调整 */
+        }
+
         /* === 导航栏样式 === */
         .navbar {
             position: fixed;
@@ -217,6 +228,8 @@
             border: 1px solid var(--border-color);
             margin: 1.5rem 0;
             padding: 1.25rem 1.5rem;
+            padding-top: 0;
+            padding-bottom: 0;
             overflow: auto;
         }
 
