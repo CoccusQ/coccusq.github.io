@@ -1,0 +1,46 @@
+{
+    "title": "Python开发指南",
+    "date": "2024.03.25",
+    "previous_post": {
+        "title": "Python基础",
+        "url": "/posts/python-basic"
+    },
+    "next_post": {
+        "title": "Django进阶",
+        "url": "/posts/django-advanced"
+    },
+    "sections": [
+        {
+            "title": "核心概念",
+            "content": [
+                "Python是解释型语言，具有以下特点：",
+                {
+                    "code": [
+                        "# 示例代码",
+                        "def greet(name):",
+                        "    print(f'Hello {name}!')"
+                    ]
+                },
+                "函数定义使用`def`关键字",
+                {
+                    "subsection": {
+                        "title": "面向对象编程",
+                        "code": [
+                            "class Person:",
+                            "    def __init__(self, name):",
+                            "        self.name = name"
+                        ],
+                        "notes": {
+                            "title": "注意事项",
+                            "items": [
+                                "__init__是构造函数",
+                                "2024.03更新：新增类型注解"
+                            ]
+                        }
+                    }
+                },
+                "最后总结..."
+            ]
+        }
+    ]
+}
