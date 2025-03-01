@@ -6,8 +6,6 @@
 
 PS：`list` 的代码其实早在写好`vector`的当天已经写完，只是等到现在才开始写这篇介绍。
 
-传送门：[C语言实现STL：vector（动态数组）](https://coccusq.github.io/c-stl-vector)
-
 ## 代码分析
 
 以下是实现代码：
