@@ -1,1 +1,1 @@
-# [CoccusQ's Blog](https://coccusq.github.io)
+# 🏠[CoccusQ's Blog](https://coccusq.github.io)
