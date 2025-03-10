@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python音乐播放器：AutoPlayer - CoccusQ的博客</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="layout-container">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="https://coccusq.github.io" class="navbar-logo">CoccusQ</a>
+            <div class="navbar-links">
+                <a href="https://coccusq.github.io/about">关于本站✓</a>
+                <a href="https://github.com/CoccusQ/coccusq.github.io">GitHub↗</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 左侧边栏 -->
+    <aside class="sidebar-left">
+        <!-- 左侧导航内容 -->
+    </aside>
+
+    <main class="main-content">
+        <header class="article-header">
+            <h1 class="article-title" id="headline">Python音乐播放器：AutoPlayer</h1>
+            <div class="article-meta">
+                By <a href="https://github.com/CoccusQ">CoccusQ</a> · 2025.03.10 Update
+            </div>
+        </header>
+        <!-- 下面这个是占位符，不能去除 -->
+        <section class="section">
+            <h2 class="section-title" id="前言">前言</h2>
+            <p>每次听音乐的时候，发现在音乐软件里很多想听的歌没有或者是要付费，而在b站上有很多好心人上传的音乐视频。</p>
+            <p>但是在b站上听音乐也有个问题，想要切歌的时候需要手动切换网页，很不方便。</p>
+            <p>于是我利用<code>python</code>的<code>selenium</code>库实现了一个能够根据给出的b站链接列表自动播放音乐的程序，支持<code>列表循环</code>、<code>单曲循环</code>、<code>乱序播放</code>。
+            </p>
+            <a href="https://github.com/CoccusQ/autoplayer">项目GitHub仓库链接：AutoPlayer</a>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="工作原理">工作原理</h2>
+            <p>程序分为两部分：</p>
+            <p>第一部分是<code>自动登录脚本</code>，用来解决每次用播放器打开网页时需要登录b站的问题；</p>
+            <p>第二部分是<code>音乐播放器</code>，使用了两个线程，一个线程处理UI界面的交互逻辑，另一个线程处理音乐播放逻辑。</p>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="Part1自动登录">Part 1 自动登录</h2>
+            <p>通过搜集资料发现，b站的登录采用常见的<code>cookie</code>机制。</p>
+            <p>也就是说只要登录过一次，浏览器就会将登录信息存在<code>cookie</code>文件中；下次打开b站时，网站会先检测<code>cookie</code>文件中的登录信息，如果登录信息有效，b站就会正常登录。
+            </p>
+            <p>于是，我们只需要在每次打开浏览器时将浏览器的<code>cookie</code>文件替换为准备好的包含b站登录信息的<code>cookie</code>即可。</p>
+            <p>这样就解决了每次使用脚本打开b站都会不断弹出登录提示的问题（这个登录提示太不人性化了，这是逼着游客登录啊）</p>
+            <p>于是我们有以下的实现代码（这段代码其实是以前在网上找的登录脚本，其来源由于年代久远暂时找不到了）</p>
+
+            <pre class="language-python"><code># login.py
+from selenium import webdriver
+ 
+driver = webdriver.Edge()
+driver.get(&#x27;https://www.bilibili.com/&#x27;)
+ 
+&#x27;&#x27;&#x27;
+打开网页后直接登录
+手动登录完成后在命令行内按回车，因为我用input阻塞了
+等提示进程已结束，退出代码，可以看到同级目录下多出一个名为 jsoncookie.json的文件。里面存的是cookie
+&#x27;&#x27;&#x27;
+ 
+driver.implicitly_wait(10)
+ 
+input(&quot;手动登录，完成后请在命令行内按回车继续&quot;)
+driver.get(&quot;https://www.bilibili.com/&quot;)
+dictcookie = driver.get_cookies()
+print(&#x27;dictcookie:&#x27;,dictcookie)
+import json
+jsoncookie = json.dumps(dictcookie)
+print(&#x27;jsoncookie:&#x27;,jsoncookie)
+with open(&#x27;jsoncookie.json&#x27;,&#x27;w&#x27;) as f:
+    f.write(jsoncookie)
+driver.close()</code></pre>
+
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="Part2音乐播放器">Part 2 音乐播放器</h2>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id=""></h2>
+            <div class="subsection">
+                <h3 class="subsection-title", id="架构设计">架构设计</h3>
+                <p>这一部分程序采用双线程架构：</p>
+
+                <div class="note">
+                    <strong>💡</strong>
+                    <ul>
+                        <li>UI线程：负责处理用户交互事件，通过按钮操作设置全局状态标志</li>
+                        <li>播放线程：执行核心播放逻辑，监控全局状态标志进行响应</li>
+                    </ul>
+                </div>
+
+                <p>这种设计避免了<code>selenium</code>操作阻塞主线程，确保界面始终响应流畅。</p>
+                <p>两个线程通过<code>共享全局变量</code>实现通信，以下是关键状态标志说明：</p>
+                <div class="markdown-table-container">
+                    <table class="markdown-table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left">全局变量</th>
+                                <th style="text-align: left">作用域</th>
+                                <th style="text-align: left">功能描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left">is_loop</td>
+                                <td style="text-align: left">播放模式控制</td>
+                                <td style="text-align: left">列表循环</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">is_repeat</td>
+                                <td style="text-align: left">播放模式控制</td>
+                                <td style="text-align: left">单曲循环</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">is_shuffle</td>
+                                <td style="text-align: left">播放模式控制</td>
+                                <td style="text-align: left">随机播放</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">is_next</td>
+                                <td style="text-align: left">播放控制</td>
+                                <td style="text-align: left">切换下一曲</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">is_prev</td>
+                                <td style="text-align: left">播放控制</td>
+                                <td style="text-align: left">切换上一曲</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">stop_thread</td>
+                                <td style="text-align: left">程序生命周期控制</td>
+                                <td style="text-align: left">终止程序</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id=""></h2>
+            <div class="subsection">
+                <h3 class="subsection-title", id="播放主循环详解">播放主循环详解</h3>
+                <p>需要注意的是，由于b站初始设置问题，每次登录时默认<code>静音开播</code>并且<code>自动连播</code>，需要对这部分进行额外处理</p>
+
+                <pre class="language-python"><code>def play_loop():
+    global i  # 当前播放索引
+    while not stop_thread:
+        # 播放索引边界检测
+        if i &gt;= num:
+            if is_loop: i = 0  # 循环模式重置索引
+            else: break        # 非循环模式结束播放
+        
+        # 加载视频页面
+        driver.get(video_links[i])
+        video = driver.find_element(By.CSS_SELECTOR, &quot;video&quot;)
+        
+        # 首视频初始化操作
+        if is_first_video:
+            driver.execute_script(&quot;arguments[0].pause()&quot;, video)
+            driver.execute_script(&quot;arguments[0].currentTime = 0;&quot;, video)
+            # 音量/连续播放设置（略）
+        
+        # 获取视频元数据
+        video_duration = driver.execute_script(&quot;return arguments[0].duration;&quot;, video)
+        
+        # 更新UI显示
+        song_name_label.config(text=f&quot;♫ {processed_song_name} &quot;)
+        current_time_label.config(text=&quot;00:00&quot;)
+        
+        # 启动视频播放
+        driver.execute_script(&quot;arguments[0].play();&quot;, video)
+        
+        # 实时播放监控
+        while True:
+            if stop_thread: return  # 强制终止检测
+            if driver.execute_script(&quot;return arguments[0].ended;&quot;, video):
+                break  # 自然播放结束
+            # 更新时间显示（略）
+            
+            # 强制切歌检测
+            if is_next or is_prev:
+                break  # 退出当前播放循环
+            time.sleep(1)
+        
+        # 播放模式处理
+        if not is_repeat:
+            i += 1  # 非单曲循环时递增索引</code></pre>
+
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id=""></h2>
+            <div class="subsection">
+                <h3 class="subsection-title", id="播放模式切换机制">播放模式切换机制</h3>
+                <p>通过<code>toggle_loop()</code>函数实现四种播放模式的轮换切换：</p>
+
+                <pre class="language-python"><code>def toggle_loop():
+    global play_mode
+    play_mode = play_mode % play_mode_num + 1
+    
+    # 模式对应操作
+    if play_mode == 1:   # 列表循环
+        is_loop = True
+        loop_button.config(text=&quot;🔁&quot;)
+    elif play_mode == 2: # 顺序播放
+        is_loop = False
+        loop_button.config(text=&quot;➡️&quot;)
+    elif play_mode == 3: # 单曲循环
+        is_repeat = True
+        loop_button.config(text=&quot;🔂&quot;)
+    elif play_mode == 4: # 随机播放
+        shuffle_video()  # 执行洗牌算法
+        loop_button.config(text=&quot;🔀&quot;)</code></pre>
+
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id=""></h2>
+            <div class="subsection">
+                <h3 class="subsection-title", id="关键技术点解析">关键技术点解析</h3>
+                <p>1. Selenium网页控制：</p>
+
+                <div class="note">
+                    <strong>💡</strong>
+                    <ul>
+                        <li>通过execute_script()执行JavaScript直接操作视频元素</li>
+                        <li>示例：driver.execute_script(&quot;arguments[0].play();&quot;, video)启动播放</li>
+                        <li>示例：driver.execute_script(&quot;return arguments[0].duration;&quot;, video)获取视频时长</li>
+                    </ul>
+                </div>
+
+                <p>2. 随机播放实现：</p>
+
+                <pre class="language-python"><code>def shuffle_video():
+    global video_links, temp_list
+    temp_list = video_links.copy()  # 备份原始列表
+    random.shuffle(video_links)     # 生成随机序列</code></pre>
+
+                <p>使用临时列表保存原始顺序，恢复时直接<code>video_links = temp_list.copy()</code></p>
+                <p>3. 跨线程通信：</p>
+
+                <div class="note">
+                    <strong>💡</strong>
+                    <ul>
+                        <li>UI线程通过修改is_next/is_prev标志通知播放线程</li>
+                        <li>播放线程每次循环开始都会检查这些标志位</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="总结">总结</h2>
+            <p>这个程序最开始只有命令行界面，经过几次升级，最终实现了GUI界面操作。</p>
+            <p>完整代码如下：</p>
+
+            <pre class="language-python"><code># AutoPlayerGUI.py
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import tkinter as tk
+from tkinter import font
+import ctypes
+import random
+import time
+import json
+import re
+import threading
+
+with open(&#x27;playlist.json&#x27;, &#x27;r&#x27;) as f:
+    video_links = json.load(f)
+temp_list = []
+
+driver = webdriver.Edge()
+driver.get(&#x27;https://www.bilibili.com/&#x27;)
+driver.delete_all_cookies()
+with open(&#x27;jsoncookie.json&#x27;, &#x27;r&#x27;) as f:
+    ListCookies = json.loads(f.read())
+for cookie in ListCookies:
+    driver.add_cookie({
+        &#x27;domain&#x27;: &#x27;.bilibili.com&#x27;,
+        &#x27;name&#x27;: cookie[&#x27;name&#x27;],
+        &#x27;value&#x27;: cookie[&#x27;value&#x27;],
+        &#x27;path&#x27;: &#x27;/&#x27;,
+        &#x27;expires&#x27;: None,
+        &#x27;httponly&#x27;: False,
+    })
+driver.get(&#x27;https://www.bilibili.com/&#x27;)
+
+win = tk.Tk()
+win.title(&quot;AutoPlayer&quot;)
+win.attributes(&quot;-topmost&quot;, True)
+
+#告诉操作系统使用程序自身的dpi适配
+ctypes.windll.shcore.SetProcessDpiAwareness(1)
+#获取屏幕的缩放因子
+ScaleFactor=ctypes.windll.shcore.GetScaleFactorForDevice(0)
+#设置程序缩放
+win.tk.call(&#x27;tk&#x27;, &#x27;scaling&#x27;, ScaleFactor/75)
+
+# 全局变量
+stop_thread = False  # 标志位，用于结束线程
+is_first_video = True
+is_loop = True
+is_repeat = False
+is_shuffle = False
+is_pause = False
+is_next = False
+is_prev = False
+play_mode = 1
+play_mode_num = 4 # 4种播放模式
+i = 0
+video_duration = 0
+video = 0
+num = len(video_links)
+
+def play_loop():
+    global i
+    global is_first_video
+    global is_pause
+    global video_duration
+    global video
+    global is_prev
+    global is_next
+    
+    while not stop_thread:  # 检查是否需要结束
+        if i &gt;= num:
+            if is_loop:
+                i = 0
+            else:
+                break
+
+        driver.get(video_links[i])
+        time.sleep(2)
+        video = driver.find_element(By.CSS_SELECTOR, &quot;video&quot;)
+        if is_first_video:
+            driver.execute_script(&quot;arguments[0].pause()&quot;, video)
+            driver.execute_script(&quot;arguments[0].currentTime = 0;&quot;, video)
+            volume_button = driver.find_element(By.CLASS_NAME, &quot;bpx-player-ctrl-btn.bpx-player-ctrl-volume&quot;)
+            volume_button.click()
+            switch_button = driver.find_element(By.CLASS_NAME, &quot;continuous-btn&quot;)
+            switch_button.click()
+            is_first_video = False
+        video_duration = driver.execute_script(&quot;return arguments[0].duration;&quot;, video)
+        minutes = int(video_duration // 60)
+        seconds = int(video_duration % 60)
+        temp_song_name = driver.find_element(By.CLASS_NAME, &quot;tag-txt&quot;)
+        pattern = re.compile(re.escape(&quot;发现《&quot;))
+        song_name = pattern.sub(&#x27;&#x27;, temp_song_name.text)
+        pattern = re.compile(r&#x27;》&#x27;)
+        song_name = pattern.sub(&#x27;&#x27;, song_name)
+        song_name = re.sub(r&#x27;[‘’]&#x27;, &quot;&#x27;&quot;, song_name)
+        song_name = re.sub(r&#x27;[“”]&#x27;, &#x27;&quot;&#x27;, song_name)
+        driver.execute_script(&quot;arguments[0].play();&quot;, video)
+        if song_name is not None:
+            song_name_label.config(text=f&quot;♫ {song_name} &quot;)
+            current_time_label.config(text=&quot;00:00&quot;)
+            duration_label.config(text=f&quot;/ {minutes:02d}:{seconds:02d}&quot;)
+        while True:
+            if stop_thread:
+                return
+            if driver.execute_script(&quot;return arguments[0].ended;&quot;, video):
+                break
+            current_time = driver.execute_script(&quot;return arguments[0].currentTime;&quot;, video)
+            minutes = int(current_time // 60)
+            seconds = int(current_time % 60)
+            current_time_label.config(text=f&quot;{minutes:02d}:{seconds:02d}&quot;)
+            if stop_thread:
+                break  # 如果线程需要结束，则退出
+            if is_next:
+                is_next = False
+                break
+            if is_prev:
+                is_prev = False
+                break
+            time.sleep(1)
+        if not is_repeat:
+            i += 1
+
+def play_video():
+    global video
+    driver.execute_script(&quot;arguments[0].play();&quot;, video)
+
+def pause_video():
+    global video
+    driver.execute_script(&quot;arguments[0].pause();&quot;, video)
+
+def play_or_pause():
+    global is_pause  # 声明is_pause为全局变量
+    if is_pause:
+        is_pause = False
+        play_button.config(text=&quot;⏸️&quot;)  # 更新时间为暂停图标
+        play_video()
+    else:
+        is_pause = True
+        play_button.config(text=&quot;▶&quot;)  # 更新时间为播放图标
+        pause_video()
+
+def next_video():
+    global video_duration
+    global video
+    global is_next 
+    is_next = True
+    #driver.execute_script(f&quot;arguments[0].currentTime = {video_duration};&quot;, video)
+
+def prev_video():
+    global i
+    global video
+    global video_duration
+    global is_prev
+    i -= 2
+    if i &lt; 0 and is_loop:
+        i = num - 2
+    is_prev = True
+    #driver.execute_script(f&quot;arguments[0].currentTime = {video_duration};&quot;, video)
+
+def fast_forward_video():
+    global video
+    global video_duration
+    driver.execute_script(f&quot;if (arguments[0].currentTime + 5 &gt;= {video_duration}) arguments[0].currentTime = {video_duration}; else arguments[0].currentTime += 5;&quot;, video)
+
+def fast_reverse_video():
+    global video
+    global video_duration
+    driver.execute_script(&quot;if (arguments[0].currentTime - 5 &lt;= 0) arguments[0].currentTime = 0; else arguments[0].currentTime -= 5;&quot;, video)
+
+def shuffle_video():
+    global video_links
+    global temp_list
+    temp_list = list(video_links)
+    random.shuffle(video_links)
+
+def revert_video():
+    global is_shuffle
+    global video_links
+    global temp_list
+    if is_shuffle:
+        video_links = list(temp_list)
+        is_shuffle = False
+
+def toggle_loop():
+    global play_mode
+    global is_loop
+    global is_repeat
+    global is_shuffle
+    
+    play_mode += 1
+    if play_mode &gt; play_mode_num:
+        play_mode = 1
+    
+    if play_mode == 1:  # 1-列表循环
+        is_loop = True
+        is_repeat = False
+        loop_button.config(text=&quot;🔁&quot;)
+        revert_video()
+    elif play_mode == 2:  # 2-顺序播放
+        is_loop = False
+        is_repeat = False
+        loop_button.config(text=&quot;➡️&quot;)
+        revert_video()
+    elif play_mode == 3:  # 3-单曲循环
+        is_loop = False
+        is_repeat = True
+        loop_button.config(text=&quot;🔂&quot;)
+    if play_mode == 4:  # 4-随机播放
+        is_loop = True
+        is_repeat = False
+        is_shuffle = True
+        loop_button.config(text=&quot;🔀&quot;)
+        shuffle_video()
+
+def on_closing():
+    global stop_thread
+    stop_thread = True  # 设置标志位为True，通知线程结束
+    win.destroy()  # 销毁窗口
+    driver.quit()  # 确保 WebDriver 正确关闭
+    # 等待线程结束
+    for thread in threading.enumerate():
+        if thread != threading.current_thread():
+            thread.join()
+
+
+head_font = font.Font(font=(&quot;微软雅黑&quot;, 12))
+time_font = font.Font(font=(&quot;微软雅黑&quot;, 8))
+button_font = font.Font(font=(&quot;微软雅黑&quot;, 14))
+
+head_frame = tk.Frame(win)
+song_name_label = tk.Label(head_frame, text=&quot;♫&quot;, font=head_font)
+current_time_label = tk.Label(head_frame, font=time_font)
+duration_label = tk.Label(head_frame, font=time_font)
+
+# 创建按钮
+button_frame = tk.Frame(win)
+prev_button = tk.Button(button_frame, text=&quot;⏮️&quot;, command=prev_video, font=button_font)
+fast_reverse_button = tk.Button(button_frame, text=&quot;⏪&quot;, command=fast_reverse_video, font=button_font)
+play_button = tk.Button(button_frame, text=&quot;⏸️&quot;, command=play_or_pause, font=button_font)
+fast_forward_button = tk.Button(button_frame, text=&quot;⏩&quot;, command=fast_forward_video, font=button_font)
+next_button = tk.Button(button_frame, text=&quot;⏭️&quot;, command=next_video, font=button_font)
+loop_button = tk.Button(button_frame, text=&quot;🔁&quot;, command=toggle_loop, font=button_font)
+
+# 布局按钮为水平
+song_name_label.pack(side=&quot;left&quot;)
+current_time_label.pack(side=&quot;left&quot;)
+duration_label.pack(side=&quot;left&quot;)
+head_frame.pack()
+prev_button.pack(side=tk.LEFT)
+fast_reverse_button.pack(side=tk.LEFT)
+play_button.pack(side=tk.LEFT)
+fast_forward_button.pack(side=tk.LEFT)
+next_button.pack(side=tk.LEFT)
+loop_button.pack(side=tk.LEFT)
+button_frame.pack()
+
+# 绑定关闭事件
+win.protocol(&quot;WM_DELETE_WINDOW&quot;, on_closing)
+
+# 启动播放循环线程
+threading.Thread(target=play_loop).start()
+
+win.mainloop()
+
+if not stop_thread:
+    driver.quit()</code></pre>
+
+        </section>
+
+        <!-- 索引部分 -->
+        <div class="guide-grid">
+            <article class="guide-card">
+                <div class="guide-card-left">
+                    <span class="guide-date">Last post</span>
+                    <a href="https://coccusq.github.io/build-tools" class="guide-title-link">
+                        <h2 class="guide-title">« 模板化网页生成工具：MarkdownConverter&amp;BlogGenerator——原理、功能与使用方法详解</h2>
+                    </a>
+                </div>
+            </article>
+            <article class="guide-card">
+                <div class="guide-card-right">
+                    <span class="guide-date">Next post</span>
+                    <a href="#" class="guide-title-link">
+                        <h2 class="guide-title"> »</h2>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- 右侧边栏 -->
+    <aside class="sidebar-right">
+        <div class="sidebar-header">文档目录</div>
+        <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    </aside>
+
+    <!-- 页脚内容 -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4 class="footer-title">About us</h4>
+                <div class="footer-links">
+                    <a href="https://coccusq.github.io/about">✒️Learn More</a>
+                    <a href="https://coccusq.github.io/build-tools">🛠️Build-tools</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Useful Tools</h4>
+                <div class="footer-links">
+                    <a href="https://chat.deepseek.com">🤖DeepSeek</a>
+                    <a href="https://github.com/cayxc/Mdtht">📑Mdtht</a>
+                    <a href="https://www.emojiall.com">😄EMOJIALL</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Social</h4>
+                <div class="footer-links">
+                    <a href="mailto:king_crab_cn@outlook.com">Email</a>
+                    <a href="https://github.com/CoccusQ/coccusq.github.io">GitHub↗</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-copyright">
+            <p>© 2025 CoccusQ 🇨🇳. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="copy-feedback" id="copyFeedback"></div>
+
+    <script src="script.js"></script>
+
+    <!-- 代码高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-c.min.js"></script>
+</body>
+
+</html>

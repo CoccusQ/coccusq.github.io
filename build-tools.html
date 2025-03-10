@@ -35,59 +35,64 @@
         </header>
         <!-- 下面这个是占位符，不能去除 -->
         <section class="section">
-<h2 class="section-title" id=""></h2>
+            <h2 class="section-title" id=""></h2>
 
-        <div class="note">
-            <strong>💡</strong>
-            <ul><li>内容较多较杂，可点击目录快速跳转注意实现</li><li>如有疑惑，可点击页脚联系方式与我联系</li><li>本文和该工具均采用deepseek辅助生成</li></ul>
-        </div>
-        
-</section>
-<section class="section">
-<h2 class="section-title" id="一、程序原理">一、程序原理</h2>
-<p>这是一个将Markdown格式文档转换为结构化JSON配置，并最终生成HTML博客页面的工具链。核心由<code>MarkdownConverter</code>类和<code>BlogGenerator</code>类组成，实现以下核心流程：</p>
+            <div class="note">
+                <strong>💡</strong>
+                <ul>
+                    <li>内容较多较杂，可点击目录快速跳转注意实现</li>
+                    <li>如有疑惑，可点击页脚联系方式与我联系</li>
+                    <li>本文和该工具均采用deepseek辅助生成</li>
+                </ul>
+            </div>
 
-<pre class="language-"><code>Markdown文档 → 结构化JSON → HTML页面</code></pre>
-        
-<p>1. Markdown解析阶段 (<code>MarkdownConverter</code>)</p>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="一、程序原理">一、程序原理</h2>
+            <p>这是一个将Markdown格式文档转换为结构化JSON配置，并最终生成HTML博客页面的工具链。核心由<code>MarkdownConverter</code>类和<code>BlogGenerator</code>类组成，实现以下核心流程：
+            </p>
 
-<pre class="language-"><code>通过正则表达式逐行解析Markdown元素
+            <pre class="language-"><code>Markdown文档 → 结构化JSON → HTML页面</code></pre>
+
+            <p>1. Markdown解析阶段 (<code>MarkdownConverter</code>)</p>
+
+            <pre class="language-"><code>通过正则表达式逐行解析Markdown元素
 识别标题层级（H1-H3）、代码块、列表、段落等元素
 构建嵌套的章节结构（Section/Subsection）
 生成包含内容语义的JSON配置文件</code></pre>
-        
-<p>2. HTML生成阶段 (<code>BlogGenerator</code>)</p>
 
-<pre class="language-"><code>读取HTML模板和JSON配置
+            <p>2. HTML生成阶段 (<code>BlogGenerator</code>)</p>
+
+            <pre class="language-"><code>读取HTML模板和JSON配置
 将结构化内容注入模板生成最终页面</code></pre>
-        
-</section>
-<section class="section">
-<h2 class="section-title" id=""></h2>
-<div class="subsection">
-<h3 class="subsection-title">协同工作流程示意图</h3>
 
-<pre class="language-"><code>[Markdown编辑器]  
+        </section>
+        <section class="section">
+            <h2 class="section-title" id=""></h2>
+            <div class="subsection">
+                <h3 class="subsection-title">协同工作流程示意图</h3>
+
+                <pre class="language-"><code>[Markdown编辑器]  
     ↓  
 [MarkdownConverter] → (config.json)  
     ↓  
 [BlogGenerator] → [HTML模板]  
     ↓  
 [浏览器] ← output.html</code></pre>
-        
-</div>
-</section>
-<section class="section">
-<h2 class="section-title" id="二、核心功能">二、核心功能</h2>
-<p>1. 支持元素类型</p>
-<p>标题：<code># H1</code>、<code>## H2</code>、<code>### H3</code></p>
-<p>代码块：```包裹的代码段（支持语言标注）</p>
-<p>无序列表：以<code>- * +</code>开头的列表项</p>
-<p>普通段落：连续文本内容</p>
-<p>1. 数据结构化</p>
-<p>生成嵌套的JSON结构：</p>
 
-<pre class="language-json"><code>{
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="二、核心功能">二、核心功能</h2>
+            <p>1. 支持元素类型</p>
+            <p>标题：<code># H1</code>、<code>## H2</code>、<code>### H3</code></p>
+            <p>代码块：```包裹的代码段（支持语言标注）</p>
+            <p>无序列表：以<code>- * +</code>开头的列表项</p>
+            <p>普通段落：连续文本内容</p>
+            <p>1. 数据结构化</p>
+            <p>生成嵌套的JSON结构：</p>
+
+            <pre class="language-json"><code>{
        &quot;title&quot;: &quot;文档标题&quot;,
        &quot;sections&quot;: [
          {
@@ -103,19 +108,22 @@
          }
        ]
      }</code></pre>
-        
-<p>内容元素支持四种类型：</p>
-<p>普通文本段落：<code>&quot;段落内容&quot;</code></p>
-<p>代码块：<code>{ &quot;code&quot;: [&quot;line1&quot;, &quot;line2&quot;], &quot;notes&quot;: { ... } }</code></p>
-<p>要点列表：<code>{ &quot;notes&quot;: { &quot;title&quot;: &quot;要点说明&quot;, &quot;items&quot;: [...] } }</code></p>
-<p>表格：<code>{ &quot;table&quot;: { &quot;headers&quot;: [&quot;header1&quot;, ...&quot;], &quot;align&quot;: [&quot;left&quot;, ...], &quot;rows&quot;: [...] } }</code></p>
-</section>
-<section class="section">
-<h2 class="section-title" id="三、使用方法">三、使用方法</h2>
-<p>1. 输入文件准备</p>
-<p>创建<code>input.md</code>文件，按以下规范编写内容：</p>
 
-<pre class="language-markdown"><code># 博客标题
+            <p>内容元素支持四种类型：</p>
+            <p>普通文本段落：<code>&quot;段落内容&quot;</code></p>
+            <p>代码块：<code>{ &quot;code&quot;: [&quot;line1&quot;, &quot;line2&quot;], &quot;notes&quot;: { ... } }</code>
+            </p>
+            <p>要点列表：<code>{ &quot;notes&quot;: { &quot;title&quot;: &quot;要点说明&quot;, &quot;items&quot;: [...] } }</code>
+            </p>
+            <p>表格：<code>{ &quot;table&quot;: { &quot;headers&quot;: [&quot;header1&quot;, ...&quot;], &quot;align&quot;: [&quot;left&quot;, ...], &quot;rows&quot;: [...] } }</code>
+            </p>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="三、使用方法">三、使用方法</h2>
+            <p>1. 输入文件准备</p>
+            <p>创建<code>input.md</code>文件，按以下规范编写内容：</p>
+
+            <pre class="language-markdown"><code># 博客标题
 
     ## 主章节1
     ### 子章节1
@@ -129,12 +137,13 @@
 
     ## 主章节2
         直接内容...</code></pre>
-        
-<p>2. 模板文件准备</p>
-<p>创建<code>template.html</code>，需包含占位符（具体格式需与<code>BlogGenerator</code>实现匹配）</p>
-<p>3. 执行转换</p>
 
-<pre class="language-python"><code># 创建转换器实例
+            <p>2. 模板文件准备</p>
+            <p>创建<code>template.html</code>，需包含占位符（具体格式需与<code>BlogGenerator</code>实现匹配）</p>
+            <p>3. 执行转换</p>
+
+            <pre
+                class="language-python"><code># 创建转换器实例
 converter = MarkdownConverter()
    
 # 转换Markdown为JSON配置
@@ -142,36 +151,44 @@ converter.convert(&quot;input.md&quot;, &quot;config.json&quot;)
    
 # 生成最终HTML
 blog_generator.BlogGenerator(&quot;template.html&quot;).generate(&quot;config.json&quot;, &quot;output.html&quot;)</code></pre>
-        
-<p>输出文件说明</p>
-<p><code>config.json</code>：结构化内容配置</p>
-<p><code>output.html</code>：最终生成的博客页面</p>
-</section>
-<section class="section">
-<h2 class="section-title" id="四、注意事项">四、注意事项</h2>
-<p>1. 格式规范</p>
 
-        <div class="note">
-            <strong>💡</strong>
-            <ul><li>必须包含且仅有一个H1标题</li><li>子章节（H3）必须位于主章节（H2）内</li><li>代码块必须成对出现（三个反引号闭合），在markdown文档内反引号请顶格</li><li>列表内暂不支持代码块和公式</li><li>若想在markdown代码块内嵌套代码块，请缩进</li></ul>
-        </div>
-        
-<p>2. 特殊处理</p>
-<p>列表项自动转为<code>notes</code>对象</p>
-<p>代码块语言说明存储于<code>notes.title</code></p>
-<p>连续段落自动合并为数组元素</p>
+            <p>输出文件说明</p>
+            <p><code>config.json</code>：结构化内容配置</p>
+            <p><code>output.html</code>：最终生成的博客页面</p>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="四、注意事项">四、注意事项</h2>
+            <p>1. 格式规范</p>
 
-        <div class="note">
-            <strong>💡</strong>
-            <ul><li>若想手动更改格式，请在`output.html`文件内直接编辑</li></ul>
-        </div>
-        
-</section>
-<section class="section">
-<h2 class="section-title" id="五、示例工作流">五、示例工作流</h2>
-<p>1. 输入<code>input.md</code>：</p>
+            <div class="note">
+                <strong>💡</strong>
+                <ul>
+                    <li>必须包含且仅有一个H1标题</li>
+                    <li>子章节（H3）必须位于主章节（H2）内</li>
+                    <li>代码块必须成对出现（三个反引号闭合），在markdown文档内反引号请顶格</li>
+                    <li>列表内暂不支持代码块和公式</li>
+                    <li>若想在markdown代码块内嵌套代码块，请缩进</li>
+                </ul>
+            </div>
 
-<pre class="language-markdown"><code># 机器学习入门
+            <p>2. 特殊处理</p>
+            <p>列表项自动转为<code>notes</code>对象</p>
+            <p>代码块语言说明存储于<code>notes.title</code></p>
+            <p>连续段落自动合并为数组元素</p>
+
+            <div class="note">
+                <strong>💡</strong>
+                <ul>
+                    <li>若想手动更改格式，请在`output.html`文件内直接编辑</li>
+                </ul>
+            </div>
+
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="五、示例工作流">五、示例工作流</h2>
+            <p>1. 输入<code>input.md</code>：</p>
+
+            <pre class="language-markdown"><code># 机器学习入门
     
     ## 核心概念
     ### 监督学习
@@ -186,10 +203,10 @@ blog_generator.BlogGenerator(&quot;template.html&quot;).generate(&quot;config.js
     ## 实践步骤
     1. 数据预处理
     2. 模型训练</code></pre>
-        
-<p>2. 输出<code>config.json</code>片段：</p>
 
-<pre class="language-json"><code>{
+            <p>2. 输出<code>config.json</code>片段：</p>
+
+            <pre class="language-json"><code>{
      &quot;title&quot;: &quot;机器学习入门&quot;,
      &quot;sections&quot;: [
        {
@@ -217,104 +234,118 @@ blog_generator.BlogGenerator(&quot;template.html&quot;).generate(&quot;config.js
        }
      ]
    }</code></pre>
-        
-</section>
-<section class="section">
-<h2 class="section-title" id="六、总结">六、总结</h2>
-</section>
-<section class="section">
-<h2 class="section-title" id=""></h2>
-<div class="subsection">
-<h3 class="subsection-title">双程序对比总结</h3>
-<div class="markdown-table-container">
-<table class="markdown-table">
-<thead><tr>
-<th style="text-align: left">维度</th>
-<th style="text-align: left">MarkdownConverter</th>
-<th style="text-align: left">BlogGenerator</th>
-</tr></thead>
-<tbody>
-<tr>
-<td style="text-align: left">核心功能</td>
-<td style="text-align: left">Markdown→结构化JSON</td>
-<td style="text-align: left">结构化JSON→HTML</td>
-</tr>
-<tr>
-<td style="text-align: left">处理方式</td>
-<td style="text-align: left">状态机解析</td>
-<td style="text-align: left">模板引擎替换</td>
-</tr>
-<tr>
-<td style="text-align: left">核心算法</td>
-<td style="text-align: left">正则匹配+层级状态管理</td>
-<td style="text-align: left">递归DOM构建+字符串操作</td>
-</tr>
-<tr>
-<td style="text-align: left">错误处理</td>
-<td style="text-align: left">隐式处理（自动跳过）</td>
-<td style="text-align: left">显式try-catch+详细错误提示</td>
-</tr>
-<tr>
-<td style="text-align: left">安全机制</td>
-<td style="text-align: left">无</td>
-<td style="text-align: left">HTML转义+链接校验</td>
-</tr>
-<tr>
-<td style="text-align: left">扩展性</td>
-<td style="text-align: left">需修改正则和状态逻辑</td>
-<td style="text-align: left">通过模板修改+新内容类型处理</td>
-</tr>
-<tr>
-<td style="text-align: left">输入输出</td>
-<td style="text-align: left">.md → .json</td>
-<td style="text-align: left">.json + .html → .html</td>
-</tr>
-<tr>
-<td style="text-align: left">复杂度</td>
-<td style="text-align: left">高（需处理嵌套关系）</td>
-<td style="text-align: left">中（主要处理结构转换）</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section class="section">
-<h2 class="section-title" id=""></h2>
-<div class="subsection">
-<h3 class="subsection-title">工具链整体特性</h3>
-<p>1. 模块化架构</p>
 
-        <div class="note">
-            <strong>💡</strong>
-            <ul><li>内容生成（Converter）与样式呈现（Generator）解耦</li><li>通过JSON实现数据中转</li></ul>
-        </div>
-        
-<p>2. 标准化输出</p>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id="六、总结">六、总结</h2>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id=""></h2>
+            <div class="subsection">
+                <h3 class="subsection-title">双程序对比总结</h3>
+                <div class="markdown-table-container">
+                    <table class="markdown-table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left">维度</th>
+                                <th style="text-align: left">MarkdownConverter</th>
+                                <th style="text-align: left">BlogGenerator</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: left">核心功能</td>
+                                <td style="text-align: left">Markdown→结构化JSON</td>
+                                <td style="text-align: left">结构化JSON→HTML</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">处理方式</td>
+                                <td style="text-align: left">状态机解析</td>
+                                <td style="text-align: left">模板引擎替换</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">核心算法</td>
+                                <td style="text-align: left">正则匹配+层级状态管理</td>
+                                <td style="text-align: left">递归DOM构建+字符串操作</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">错误处理</td>
+                                <td style="text-align: left">隐式处理（自动跳过）</td>
+                                <td style="text-align: left">显式try-catch+详细错误提示</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">安全机制</td>
+                                <td style="text-align: left">无</td>
+                                <td style="text-align: left">HTML转义+链接校验</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">扩展性</td>
+                                <td style="text-align: left">需修改正则和状态逻辑</td>
+                                <td style="text-align: left">通过模板修改+新内容类型处理</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">输入输出</td>
+                                <td style="text-align: left">.md → .json</td>
+                                <td style="text-align: left">.json + .html → .html</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">复杂度</td>
+                                <td style="text-align: left">高（需处理嵌套关系）</td>
+                                <td style="text-align: left">中（主要处理结构转换）</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <h2 class="section-title" id=""></h2>
+            <div class="subsection">
+                <h3 class="subsection-title">工具链整体特性</h3>
+                <p>1. 模块化架构</p>
 
-        <div class="note">
-            <strong>💡</strong>
-            <ul><li>统一的章节结构规范</li><li>预定义的内容类型（code/notes/paragraph）</li></ul>
-        </div>
-        
-<p>3. 可维护性</p>
+                <div class="note">
+                    <strong>💡</strong>
+                    <ul>
+                        <li>内容生成（Converter）与样式呈现（Generator）解耦</li>
+                        <li>通过JSON实现数据中转</li>
+                    </ul>
+                </div>
 
-        <div class="note">
-            <strong>💡</strong>
-            <ul><li>清晰的错误提示信息</li><li>详细的代码注释</li></ul>
-        </div>
-        
-<p>4. 典型应用场景</p>
+                <p>2. 标准化输出</p>
 
-        <div class="note">
-            <strong>💡</strong>
-            <ul><li>技术文档生成</li><li>博客文章发布</li></ul>
-        </div>
-        
-<p>该工具适用于需要将技术文档转换为结构化展示页面的场景，通过分离内容与表现形式，可快速生成风格统一的系列教程页面。</p>
-</div>
-</section>
-        
+                <div class="note">
+                    <strong>💡</strong>
+                    <ul>
+                        <li>统一的章节结构规范</li>
+                        <li>预定义的内容类型（code/notes/paragraph）</li>
+                    </ul>
+                </div>
+
+                <p>3. 可维护性</p>
+
+                <div class="note">
+                    <strong>💡</strong>
+                    <ul>
+                        <li>清晰的错误提示信息</li>
+                        <li>详细的代码注释</li>
+                    </ul>
+                </div>
+
+                <p>4. 典型应用场景</p>
+
+                <div class="note">
+                    <strong>💡</strong>
+                    <ul>
+                        <li>技术文档生成</li>
+                        <li>博客文章发布</li>
+                    </ul>
+                </div>
+
+                <p>该工具适用于需要将技术文档转换为结构化展示页面的场景，通过分离内容与表现形式，可快速生成风格统一的系列教程页面。</p>
+            </div>
+        </section>
+
         <!-- 索引部分 -->
         <div class="guide-grid">
             <article class="guide-card">
@@ -328,8 +359,8 @@ blog_generator.BlogGenerator(&quot;template.html&quot;).generate(&quot;config.js
             <article class="guide-card">
                 <div class="guide-card-right">
                     <span class="guide-date">Next post</span>
-                    <a href="#" class="guide-title-link">
-                        <h2 class="guide-title"> »</h2>
+                    <a href="https://coccusq.github.io/autoplayer" class="guide-title-link">
+                        <h2 class="guide-title">Python音乐播放器：AutoPlayer »</h2>
                     </a>
                 </div>
             </article>
@@ -348,22 +379,22 @@ blog_generator.BlogGenerator(&quot;template.html&quot;).generate(&quot;config.js
             <div class="footer-column">
                 <h4 class="footer-title">About us</h4>
                 <div class="footer-links">
-                    <a href="https://coccusq.github.io/about">Learn More✒️</a>
-                    <a href="https://coccusq.github.io/build-tools">Build-tools🛠️</a>
+                    <a href="https://coccusq.github.io/about">✒️Learn More</a>
+                    <a href="https://coccusq.github.io/build-tools">🛠️Build-tools</a>
                 </div>
             </div>
             <div class="footer-column">
                 <h4 class="footer-title">Useful Tools</h4>
                 <div class="footer-links">
-                    <a href="https://chat.deepseek.com">DeepSeek🤖</a>
-                    <a href="https://github.com/cayxc/Mdtht">Mdtht📑</a>
-                    <a href="https://www.emojiall.com">EMOJIALL😄</a>
+                    <a href="https://chat.deepseek.com">🤖DeepSeek</a>
+                    <a href="https://github.com/cayxc/Mdtht">📑Mdtht</a>
+                    <a href="https://www.emojiall.com">😄EMOJIALL</a>
                 </div>
             </div>
             <div class="footer-column">
                 <h4 class="footer-title">Social</h4>
                 <div class="footer-links">
-                    <a href="mailto:king_crab_cn@outlook.com">Email📧</a>
+                    <a href="mailto:king_crab_cn@outlook.com">Email</a>
                     <a href="https://github.com/CoccusQ/coccusq.github.io">GitHub↗</a>
                 </div>
             </div>
